@@ -1,18 +1,18 @@
 version: "2.3"
 
 services:
-    service_template-container:
+    esp_robocraft-container:
         image: ghcr.io/userver-framework/ubuntu-22.04-userver-pg:latest
         privileged: true
         network_mode: bridge
         environment:
           - PREFIX=${PREFIX:-~/.local}
-          - CCACHE_DIR=/service_template/.ccache
+          - CCACHE_DIR=/esp_robocraft/.ccache
           - CORES_DIR=/cores
         volumes:
-          - .:/service_template:rw
+          - .:/esp_robocraft:rw
         ports:
           - 8080:8080
-        working_dir: /service_template
+        working_dir: /esp_robocraft
         entrypoint:
           - ./tests/run_as_user.sh
