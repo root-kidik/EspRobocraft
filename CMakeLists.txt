@@ -1,16 +1,11 @@
 cmake_minimum_required(VERSION 3.12...3.31)
 project(esp_robocraft CXX)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-include(DownloadUserver)
-
-find_package(userver COMPONENTS core QUIET)
+find_package(userver COMPONENTS core REQUIRED)
 
 userver_setup_environment()
 
 add_library(${PROJECT_NAME}_objs OBJECT
-    src/hello.hpp
-    src/hello.cpp
     src/video.hpp
     src/video.cpp
 )

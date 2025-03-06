@@ -46,7 +46,8 @@ components_manager:
             throttling_enabled: false
             url_trailing_slash: strict-match
 
-        handler-hello:
-            path: /hello
-            method: GET,POST
+        video-receiver:
             task_processor: main-task-processor
+            sockets_task_processor: main-task-processor
+            port: $video-receiver-port
+            greeting: hello

@@ -5,3 +5,4 @@ logger-level: info
 is_testing: false
 
 server-port: 8080
+video-receiver-port: 8010
