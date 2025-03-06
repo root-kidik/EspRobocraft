@@ -1,4 +1,5 @@
 #include "video.hpp"
+#include <userver/logging/log.hpp>
 #include <userver/yaml_config/merge_schemas.hpp>
 
 namespace esp_robocraft
@@ -13,12 +14,14 @@ TcpAcceptorBase(config, context)
 void VideoReceiver::ProcessSocket(userver::engine::io::Socket&& sock)
 {
     std::string data;
-    data.resize(2);
+    data.resize(3);
 
     while (!userver::engine::current_task::ShouldCancel())
     {
         const auto read_bytes = sock.ReadAll(data.data(), 2, {});
-        if (read_bytes != 2 || data != "hi")
+        LOG_DEBUG() << data;
+
+        if (read_bytes != 2)
         {
             sock.Close();
             return;

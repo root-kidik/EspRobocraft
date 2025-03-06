@@ -6,11 +6,8 @@
     "runArgs": [
         "--cap-add=SYS_PTRACE",
         "--security-opt",
-        "seccomp=unconfined"
-    ],
-    "forwardPorts": [
-        8080,
-        8010
+        "seccomp=unconfined",
+        "--network=host"
     ],
     "containerEnv": {
         "SHELL": "/bin/bash",
