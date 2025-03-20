@@ -9,7 +9,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
     src/video.hpp
     src/video.cpp
 )
-target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::core)
+
+find_package(OpenCV REQUIRED)
+
+target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::core ${OpenCV_LIBS})
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_objs)
