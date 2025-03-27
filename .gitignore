@@ -5,6 +5,7 @@ compile_commands.json
 .ccache/
 .idea/
 .vscode/
+!.vscode/settings.json
 !.vscode/c_cpp_properties.json
 !.vscode/cmake-variants.yaml
 !.vscode/README.md
