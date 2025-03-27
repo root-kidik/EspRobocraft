@@ -6,7 +6,7 @@
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
-#include "video.hpp"
+#include <infrastructure/VideoReceiver.hpp>
 
 int main(int argc, char* argv[])
 {

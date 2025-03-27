@@ -2,6 +2,9 @@
 
 #include <userver/components/tcp_acceptor_base.hpp>
 
+#include <domain/JpegBuffer.hpp>
+#include <domain/VideoWriter.hpp>
+
 namespace esp_robocraft
 {
 
@@ -15,6 +18,10 @@ public:
     void ProcessSocket(userver::engine::io::Socket&& sock) override;
 
     static userver::yaml_config::Schema GetStaticConfigSchema();
+
+private:
+    VideoWriter _video_writer;
+    JpegBuffer _jpeg_buffer;
 };
 
 } // namespace esp_robocraft
