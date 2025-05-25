@@ -9,8 +9,6 @@ void VideoWriter::on_jpeg(const std::vector<std::uint8_t>& jpeg)
 {
     if (auto mat = cv::imdecode(jpeg, cv::IMREAD_COLOR); !mat.empty())
         cv::imwrite("image.jpeg", mat);
-    else
-        std::cerr << "ERRRRRRRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRR\n";
 }
 
 } // namespace esp_robocraft

@@ -20,6 +20,7 @@ userver_testsuite_add(
   --service-config=${CMAKE_SOURCE_DIR}/configs/static_config.yaml
   --service-binary=${CMAKE_BINARY_DIR}/bin/${PROJECT_NAME}
   --service-config-vars=${CMAKE_SOURCE_DIR}/configs/config_vars.testing.yaml
+  REQUIREMENTS ${CMAKE_SOURCE_DIR}/tests/requirements.txt
 )
 
 add_subdirectory(tests/unit)
