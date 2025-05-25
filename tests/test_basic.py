@@ -15,6 +15,8 @@ async def test_video(service_client):
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+    server_addr = ("localhost", 8010)
+
     try:
         fps = cap.get(cv2.CAP_PROP_FPS)
         frame_delay = 1 / fps if fps > 0 else 0.03  # 30 FPS
@@ -28,9 +30,12 @@ async def test_video(service_client):
             data = jpeg.tobytes()
 
             total_bytes = len(data)
+
+            sock.sendto(struct.pack("<I", total_bytes), server_addr)
+
             for offset in range(0, total_bytes, CHUNK_SIZE):
                 chunk = data[offset:min(offset + CHUNK_SIZE, total_bytes)]
-                sock.sendto(chunk, ("localhost", 8010))
+                sock.sendto(chunk, server_addr)
 
             time.sleep(frame_delay)
 

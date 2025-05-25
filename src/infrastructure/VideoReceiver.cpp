@@ -2,10 +2,10 @@
 #include <userver/logging/log.hpp>
 #include <userver/yaml_config/merge_schemas.hpp>
 
+#include <infrastructure/VideoReceiver.hpp>
+
 #include <arpa/inet.h>
 #include <netinet/in.h>
-
-#include <infrastructure/VideoReceiver.hpp>
 
 namespace esp_robocraft
 {
@@ -32,9 +32,18 @@ _socket{userver::engine::io::AddrDomain::kInet, userver::engine::io::SocketType:
 
                                              while (!userver::engine::current_task::ShouldCancel())
                                              {
-                                                 const auto read_bytes = _socket.ReadSome(buffer.data(), buffer.size(), {});
+                                                 if (_jpeg_buffer.isCompleted())
+                                                 {
+                                                     std::uint32_t waited_size;
+                                                     if (_socket.ReadSome(&waited_size, sizeof(waited_size), {}) == 0)
+                                                     {
+                                                         continue;
+                                                     }
+                                                     _jpeg_buffer.setWaitedSize(waited_size);
+                                                 }
 
-                                                 _jpeg_buffer.add(buffer, read_bytes);
+                                                 const auto readed_size = _socket.ReadSome(buffer.data(), buffer.size(), {});
+                                                 _jpeg_buffer.add(buffer, readed_size);
                                              }
                                          });
 }
