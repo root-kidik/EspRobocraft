@@ -39,6 +39,7 @@ components_manager:
             path: /tests/{action}
             method: POST
             task_processor: main-task-processor
+
         handler-ping:
             path: /ping
             method: GET
@@ -47,7 +48,4 @@ components_manager:
             url_trailing_slash: strict-match
 
         video-receiver:
-            task_processor: main-task-processor
-            sockets_task_processor: main-task-processor
             port: $video-receiver-port
-            greeting: hello

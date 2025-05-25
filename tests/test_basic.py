@@ -9,10 +9,11 @@ async def test_basic(service_client):
     assert response.status == 200
 
 async def test_video(service_client):
+    CHUNK_SIZE = 1024
+
     cap = cv2.VideoCapture("/home/user/service_template/tests/video/cat.mp4")
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(("localhost", 8010))
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     try:
         fps = cap.get(cv2.CAP_PROP_FPS)
@@ -24,8 +25,12 @@ async def test_video(service_client):
                 break
 
             _, jpeg = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 85])
+            data = jpeg.tobytes()
 
-            sock.sendall(jpeg.tobytes())
+            total_bytes = len(data)
+            for offset in range(0, total_bytes, CHUNK_SIZE):
+                chunk = data[offset:min(offset + CHUNK_SIZE, total_bytes)]
+                sock.sendto(chunk, ("localhost", 8010))
 
             time.sleep(frame_delay)
 
